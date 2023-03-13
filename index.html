@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://getbootstrap.com/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150531022-19"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-150531022-19');
+</script>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=63ec58c110da2a001a576f53&product=sop' async='async'></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spacebar Counter | Spacebar Clicker or Keyboard Counter</title>
+<meta name="description" content="The Spacebar Counter, also known as the Spacebar Clicker or Keyboard Counter, is a tool that lets you track the number of times you press the spacebar within a chosen timeframe. It's a fun and interactive way to challenge yourself or compete with friends. Give it a try and see how many clicks you can achieve!">
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://www.copy-paste-fonts.com/spacebar-counter.png" />
+<meta property="og:url" content="https://www.copy-paste-fonts.com/spacebar-counter" />
+<meta property="og:title" content="Spacebar Counter | Spacebar Clicker or Keyboard Counter" />
+<meta property="og:description" content="The Spacebar Counter, also known as the Spacebar Clicker or Keyboard Counter, is a tool that lets you track the number of times you press the spacebar within a chosen timeframe. It's a fun and interactive way to challenge yourself or compete with friends. Give it a try and see how many clicks you can achieve!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+      html,body {
+        height: 100%;
+      }
+      .wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        flex-flow: column;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+      }
+      .title{
+        font-size: 40px;
+      }
+      
+      .counter-wrapper{
+        font-size: 2em;
+        font-weight: bold;
+        color: #000;
+      }
+      .counter{
+        font-size: 5em;
+        color: #e28d73;
+        text-shadow: rgb(0 0 0) 1px 0px 2px, rgb(0 0 0) 0px 2px 0px, rgb(0 0 0) 1px 0px 0px, rgb(0 0 0) 0px -1px 1px;
+      }
+      
+      .timer{
+        font-size: 30px;
+        font-weight: bold;
+        color: #737373;
+      }
+      .reset{
+        margin: 20px 0;
+      }
+      
+      .reset #restart{
+        width: 220px;
+        background-color: #07004c;
+        color: #fff;
+        padding: 8px 10px;
+      }
+      
+    </style>
+</head>
+<body>
+
+<div class="container sections-wrapper">
+        <div class="row">
+            <div class="primary col-md-8 col-sm-12 col-xs-12">
+                <section class="about section">
+                    <div class="section-inner">
+                        <h1 class="heading">SpaceBar Counter</h1>
+                        <div class="content">
+                            <div class="container mt-5">
+<!-- Main Content Start Here -->
+<div class="container">
+  <div class="text-center">You have hit spacebar <span class="badge bg-secondary counter">0</span> times.</div>
+  <code><div class="text-center timer">Timer : <span id="count">0</span> sec</div><br></code>
+  <div class="text-center">
+    <label>Set the Timer in Seconds:</label>
+    <input type="number" class="form-control" id="duration">
+    <label>Click on Set Timer button and timer start right after your first spacebar press</label>
+    <br><br><button class="btn btn-primary" id="setTime">Set Timer</button> <button class="btn btn-danger" id="restart">Reset</button>
+  </div>
+</div>
+<br><br>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        let timer = 0;
+        let hits = 0;
+        let interval = null;
+        let started = false;
+        let completed = false;
+        
+        $('body').keyup(function(event){
+          if( event.keyCode === 32 ){
+            
+            if(!completed){
+              if( timer > 0){
+                
+                if( started === false ){
+                  started = true;
+                  
+                  interval = setInterval(function(){
+                    timer--;
+                    $("#count").text( timer);
+                    if(timer === 0){
+                      completed = true;
+                      clearInterval(interval);
+                      
+                      $("#duration").attr("disabled", false);
+                      $("#setTime").attr("disabled", false);
+                    }
+                  }, 1000);
+                  
+                  $("#duration").attr("disabled", true);
+                  $("#setTime").attr("disabled", true);
+                }
+                hits++;
+                $(".counter").text(hits);
+              }else{
+                hits++;
+                $(".counter").text(hits);
+              }
+            }
+          }
+        });
+        
+        $('#setTime').click(function(){
+          if( $("#duration").val() && $("#duration").val()>0 ){
+            completed =  false;
+            started = false;
+            timer = $("#duration").val();
+            $("#count").text(timer);
+            
+            hits = 0;
+            $(".counter").text(hits);
+          }else{
+            $("#duration").val("");
+          }
+        });
+        
+        $('#restart').click(function(){
+          $(".counter").text("0");
+          $("#count").text("0");
+          $("#duration").attr("disabled", false);
+          $("#setTime").attr("disabled", false);
+          $("#duration").val("");
+          
+          timer = 0;
+          hits = 0;
+          interval = null;
+          started = false;
+          completed = false;
+          
+        });
+        
+      
+      });
+    </script>
+
+
+<!-- Main Content Ends Here-->
+                         
+                        </div><!--//content-->
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+    
+               
+                <section class="github section">
+                    
+                </section><!--//section-->
+            </div><!--//primary-->
+            <div class="secondary col-md-4 col-sm-12 col-xs-12">
+                
+              
+            </div><!--//secondary-->    
+        </div><!--//row-->
+    </div><!--//masonry-->
+<div class="container">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <p class="col-md-4 mb-0 text-muted">&copy; 2023 <a href="https://www.Copy-Paste-Fonts.com">Copy and Paste Fonts</a></p>
+
+    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+    </a>
+  </footer>          
+</body>
+</html>
